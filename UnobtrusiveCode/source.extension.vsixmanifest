@@ -3,7 +3,7 @@
     <Metadata>
         <Identity Id="UnobtrusiveCode.a0431330-96cb-41c5-9fec-99ddb21d7a10" Version="1.0" Language="en-US" Publisher="Niklas Källander" />
         <DisplayName>Unobtrusive Code</DisplayName>
-        <Description xml:space="preserve">An extension for Visual Studio that lets you hide away obtrusive code like comments and logging, to let you focus on the actual code.. Supports both dimming and outlining of logging code and comments as separate features.</Description>
+        <Description xml:space="preserve">An extension for Visual Studio that lets you hide away obtrusive code like comments and logging, to let you focus on the actual code.</Description>
         <MoreInfo>https://github.com/niklaskallander/vs-unobtrusive-code/</MoreInfo>
         <License>License.txt</License>
         <GettingStartedGuide>https://github.com/niklaskallander/vs-unobtrusive-code/blob/master/README.md</GettingStartedGuide>
