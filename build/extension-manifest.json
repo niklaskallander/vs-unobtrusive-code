@@ -1,0 +1,15 @@
+{
+    "$schema": "http://json.schemastore.org/vsix-publish",
+    "categories": [
+        "Coding"
+    ],
+    "identity": {
+        "internalName": "UnobtrusiveCode"
+    },
+    "overview": "../README.md",
+    "priceCategory": "free",
+    "publisher": "niklaskallander",
+    "private": false,
+    "qna": true,
+    "repo": "https://github.com/niklaskallander/vs-unobtrusive-code"
+}

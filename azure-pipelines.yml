@@ -1,0 +1,57 @@
+trigger:
+- '*' # Run the pipeline for each commit
+
+pool:
+  vmImage: 'windows-2019' # Windows Server 2019 with Visual Studio 2019
+
+variables:
+  # patch will be incremented at each build. This is useful to create a unique build version.
+  patch: $[counter('VersionCounter', 0)]
+  solution: '**/*.sln'
+  buildPlatform: 'Any CPU'
+  buildConfiguration: 'Release'
+  DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
+
+name: 1.0.$(patch) # Set the value of $(Build.BuildNumber)
+
+steps:
+- task: PowerShell@2
+  displayName: Update version in the vsix manifest
+  inputs:
+    filePath: 'build\update-version.ps1'
+    arguments: '$(Build.BuildNumber)'
+    pwsh: true
+
+- task: DotNetCoreInstaller@0
+  inputs:
+    version: '2.2.401'
+
+- script: dotnet restore
+  displayName: Restore nuget packages
+
+- task: VSBuild@1
+  inputs:
+    solution: '**\*.sln'
+    maximumCpuCount: true
+    platform: '$(buildPlatform)'
+    configuration: '$(buildConfiguration)'
+
+- task: VSTest@2
+  inputs:
+    platform: '$(buildPlatform)'
+    configuration: '$(buildConfiguration)'
+
+# Publish all needed files for the Release pipeline
+- task: CopyFiles@2
+  inputs:
+    SourceFolder: '$(Build.SourcesDirectory)'
+    Contents: |
+      README.md
+      build/**
+      **/*.vsix
+    TargetFolder: '$(Build.ArtifactStagingDirectory)'
+
+- task: PublishPipelineArtifact@0
+  inputs:
+    artifactName: 'drop'
+    targetPath: '$(Build.ArtifactStagingDirectory)'

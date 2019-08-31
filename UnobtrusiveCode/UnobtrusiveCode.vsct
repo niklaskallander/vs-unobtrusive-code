@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<CommandTable xmlns="http://schemas.microsoft.com/VisualStudio/2005-10-18/CommandTable" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <Extern href="stdidcmd.h"/>
+    <Extern href="vsshlids.h"/>
+    <Commands package="guidUnobtrusiveCodePackage">
+        <Groups>
+            <Group guid="guidUnobtrusiveCodePackageCmdSet" id="UnobtrusiveCode" priority="0x0600">
+                <Parent guid="guidSHLMainMenu" id="IDM_VS_CTXT_CODEWIN"/>
+            </Group>
+        </Groups>
+        <Buttons>
+            <Button guid="guidUnobtrusiveCodePackageCmdSet" id="UnobtrusiveCodeOutliningToggleCommandId" priority="0x0100" type="Button">
+                <Parent guid="guidUnobtrusiveCodePackageCmdSet" id="UnobtrusiveCode" />
+                <Strings>
+                    <ButtonText>Collapse/Uncollapse Obtrusive Code Outlining Regions</ButtonText>
+                </Strings>
+            </Button>
+        </Buttons>
+    </Commands>
+    <KeyBindings>
+        <KeyBinding guid="guidUnobtrusiveCodePackageCmdSet" id="UnobtrusiveCodeOutliningToggleCommandId" editor="guidVSStd97" key1="Q" mod1="ALT"/>
+    </KeyBindings>
+    <Symbols>
+        <GuidSymbol name="guidUnobtrusiveCodePackage" value="{377f72ad-751e-4b9a-863a-2cd3b7f0a034}" />
+        <GuidSymbol name="guidUnobtrusiveCodePackageCmdSet" value="{7c1f10b8-be64-492e-b76f-e6c5ecbd4576}">
+            <IDSymbol name="UnobtrusiveCode" value="0x1020" />
+            <IDSymbol name="UnobtrusiveCodeOutliningToggleCommandId" value="0x0100" />
+        </GuidSymbol>
+    </Symbols>
+</CommandTable>

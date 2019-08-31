@@ -1,0 +1,46 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <ProjectGuid>{E991DA86-ECC5-405B-B5A9-120A0B73599C}</ProjectGuid>
+        <TargetFramework>net472</TargetFramework>
+        <AssemblyTitle>UnobtrusiveCode.Tests</AssemblyTitle>
+        <OutputPath>bin\$(Configuration)\</OutputPath>
+        <LangVersion>latest</LangVersion>
+        <RuntimeIdentifiers>win</RuntimeIdentifiers>
+        <NeutralLanguage>en-US</NeutralLanguage>
+        <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    </PropertyGroup>
+    <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+        <DebugType>full</DebugType>
+    </PropertyGroup>
+    <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+        <DebugType>pdbonly</DebugType>
+    </PropertyGroup>
+    <ItemGroup>
+      <Compile Include="..\SolutionInfo.cs" Link="Properties\SolutionInfo.cs" />
+    </ItemGroup>
+    <ItemGroup>
+        <PackageReference Include="Microsoft.CodeAnalysis.Analyzers" Version="2.9.3" />
+        <PackageReference Include="Microsoft.CodeAnalysis.Common" Version="3.2.1" />
+        <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="3.2.1" />
+        <PackageReference Include="MSTest.TestAdapter" Version="1.4.0" />
+        <PackageReference Include="MSTest.TestFramework" Version="1.4.0" />
+        <PackageReference Include="System.Collections.Immutable" Version="1.5.0" />
+        <PackageReference Include="System.Memory" Version="4.5.2" />
+        <PackageReference Include="System.Numerics.Vectors" Version="4.4.0" />
+        <PackageReference Include="System.Reflection.Metadata" Version="1.6.0" />
+        <PackageReference Include="System.Runtime.CompilerServices.Unsafe" Version="4.5.2" />
+        <PackageReference Include="System.Text.Encoding.CodePages" Version="4.5.1" />
+        <PackageReference Include="System.Threading.Tasks.Extensions" Version="4.5.2" />
+    </ItemGroup>
+    <ItemGroup>
+        <Reference Include="System.Data.DataSetExtensions" />
+        <Reference Include="Microsoft.CSharp" />
+        <Reference Include="System.Net.Http" />
+    </ItemGroup>
+    <ItemGroup>
+        <ProjectReference Include="..\UnobtrusiveCode\UnobtrusiveCode.csproj" />
+    </ItemGroup>
+    <ItemGroup>
+      <Folder Include="Properties\" />
+    </ItemGroup>
+</Project>

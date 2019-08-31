@@ -1,0 +1,50 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29215.179
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnobtrusiveCode", "UnobtrusiveCode\UnobtrusiveCode.csproj", "{4B137B36-405C-427E-94C8-0B5B8A071556}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UnobtrusiveCode.Tests", "UnobtrusiveCode.Tests\UnobtrusiveCode.Tests.csproj", "{E991DA86-ECC5-405B-B5A9-120A0B73599C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{562952AB-04D8-4C92-9713-563BE3C325ED}"
+	ProjectSection(SolutionItems) = preProject
+		.gitignore = .gitignore
+		azure-pipelines.yml = azure-pipelines.yml
+		LICENSE = LICENSE
+		README.md = README.md
+		SolutionInfo.cs = SolutionInfo.cs
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build", "build", "{77D6A4C6-C035-4297-92BC-1FDB87479584}"
+	ProjectSection(SolutionItems) = preProject
+		build\extension-manifest.json = build\extension-manifest.json
+		build\publish-vsix.ps1 = build\publish-vsix.ps1
+		build\update-version.ps1 = build\update-version.ps1
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4B137B36-405C-427E-94C8-0B5B8A071556}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4B137B36-405C-427E-94C8-0B5B8A071556}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4B137B36-405C-427E-94C8-0B5B8A071556}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4B137B36-405C-427E-94C8-0B5B8A071556}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E991DA86-ECC5-405B-B5A9-120A0B73599C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E991DA86-ECC5-405B-B5A9-120A0B73599C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E991DA86-ECC5-405B-B5A9-120A0B73599C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E991DA86-ECC5-405B-B5A9-120A0B73599C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{77D6A4C6-C035-4297-92BC-1FDB87479584} = {562952AB-04D8-4C92-9713-563BE3C325ED}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {A6AA6C5E-110C-450A-B54E-E1EB999402F3}
+	EndGlobalSection
+EndGlobal
