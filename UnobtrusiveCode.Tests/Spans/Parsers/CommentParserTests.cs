@@ -54,8 +54,7 @@
             var expected1 = @"            // banana
 ";
 
-            var expected2 = @"
-            // apple
+            var expected2 = @"            // apple
 ";
 
             var actual1 = code.Substring(span1.Start, span1.Length);
@@ -92,7 +91,63 @@
         }
 
         [TestMethod]
-        public void CommentParser_EatsUpLeadingAndTrailingWhiteSpaceExceptFirstLeadingNewLine()
+        public void CommentParser_EatsUpLeadingAndTrailingWhiteSpaceExceptFirstLeadingNewLine_MultiLineComment()
+        {
+            const string code = @"namespace TestNamespace
+{
+    public class TestClass
+    {
+        private readonly ILog _logger = new Log();
+
+        public void TestMethod()
+        {
+
+              
+
+
+
+            /*
+             * apple
+             */
+
+              
+              
+
+
+        }
+    }
+}";
+            var options = new ParserTestOptions();
+
+            var syntaxTree = (CSharpSyntaxTree)CSharpSyntaxTree.ParseText(code);
+
+            var spans = _parser
+                .Parse(syntaxTree, options);
+
+            Assert.AreEqual(1, spans.Count());
+
+            var span = spans.Single();
+
+            var expected = @"              
+
+
+
+            /*
+             * apple
+             */
+
+              
+              
+
+";
+
+            var actual = code.Substring(span.Start, span.Length);
+
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestMethod]
+        public void CommentParser_EatsUpLeadingAndTrailingWhiteSpaceExceptFirstLeadingNewLine_RegularComment()
         {
             const string code = @"namespace TestNamespace
 {
@@ -127,8 +182,7 @@
 
             var span = spans.Single();
 
-            var expected = @"
-              
+            var expected = @"              
 
 
 
@@ -137,6 +191,46 @@
               
               
 
+";
+
+            var actual = code.Substring(span.Start, span.Length);
+
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestMethod]
+        public void CommentParser_EatsUpLeadingAndTrailingWhiteSpaceExceptFirstLeadingNewLine_DocComment()
+        {
+            const string code = @"namespace TestNamespace
+{
+    public class TestClass
+    {
+        private readonly ILog _logger = new Log();
+
+        /// <summary>
+        ///     apple
+        ///     banana
+        /// </summary>
+        public void TestMethod()
+        {
+        }
+    }
+}";
+            var options = new ParserTestOptions();
+
+            var syntaxTree = (CSharpSyntaxTree)CSharpSyntaxTree.ParseText(code);
+
+            var spans = _parser
+                .Parse(syntaxTree, options);
+
+            Assert.AreEqual(1, spans.Count());
+
+            var span = spans.Single();
+
+            var expected = @"        /// <summary>
+        ///     apple
+        ///     banana
+        /// </summary>
 ";
 
             var actual = code.Substring(span.Start, span.Length);

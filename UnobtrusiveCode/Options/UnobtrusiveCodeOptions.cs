@@ -22,6 +22,12 @@
         public double DimmingOpacity
             => _options.DimmingOpacity;
 
+        public bool IsDimmingOpacityTogglingEnabled
+            => _options.DimmingOpacityTogglingEnabled;
+
+        public DimmingToggleKeys DimmingToggleKey
+            => _options.DimmingToggleKey;
+
         public bool IsCommentDimmingEnabled
             => _options.CommentDimmingEnabled;
 

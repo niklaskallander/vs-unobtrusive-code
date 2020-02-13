@@ -16,22 +16,24 @@ Dims out and creates outlining regions for obtrusive code like comments and logg
 ## Options
 Options for the extension can be found at `Tools -> Options -> Unobtrusive Code`.
 
-Name                     | Default Value         | Description
------------------------- | --------------------- | -----------
-**Comments**             |                       |
-Dimming enabled          | True                  | Disable/enable comment dimming
-Outlining enabled        | True                  | Disable/enable comment outlining
-**Dimming**              |                       |
-Dimming opacity          | 0.25                  | Dimming opacity (range: 0.00-1.00)
-**Logging**              |                       |
-Dimming enabled          | True                  | Disable/enable logging dimming
-Outlining enabled        | True                  | Disable/enable logging outlining
-Outlining enabled        | log. logger. logging. | Set logging identifiers (case-insensitive, strips whitespace between the identifier word and ".")
-**Misc**                 |                       |
-Parsing delay (ms)       | 1000                  | The delay (ms) until the document is re-parsed after a buffer change.
-**Outlining**            |                       |
-Collapsed by default     | True                  | Collapse obtrusive code outlining regions as they are found (currently not working as intended)
-Collapsed form           |                       | Collapsed form of obtrusive code outlining regions (defaults to an empty string)
+Name                           | Default Value         | Description
+------------------------------ | --------------------- | -----------
+**Comments**                   |                       |
+Dimming enabled                | True                  | Disable/enable comment dimming
+Outlining enabled              | True                  | Disable/enable comment outlining
+**Dimming**                    |                       |
+Dimming opacity                | 0.4                   | Dimming opacity (range: 0.00-1.00)
+Dimming opacity toggle enabled | True                  | Disable/Enable toggling of dimming opacity
+Dimming opacity toggle key     | LeftShift             | Hold down this key to temporarily display dimmed obtrusive code with full opacity
+**Logging**                    |                       |
+Dimming enabled                | True                  | Disable/enable logging dimming
+Outlining enabled              | True                  | Disable/enable logging outlining
+Outlining enabled              | log. logger. logging. | Set logging identifiers (case-insensitive, strips whitespace between the identifier word and ".")
+**Misc**                       |                       |
+Parsing delay (ms)             | 1000                  | The delay (ms) until the document is re-parsed after a buffer change
+**Outlining**                  |                       |
+Collapsed by default           | True                  | Collapse obtrusive code outlining regions as they are found (semi-working)
+Collapsed form                 |                       | Collapsed form of obtrusive code outlining regions (defaults to an empty string)
 
 The menu command for toggling created outlining regions can be configured at `Tools -> Options -> Environment -> Keyboard`, the command id is `EditorContextMenus.CodeWindow.CollapseUncollapseObtrusiveCodeOutliningRegions` (default shortcut is ALT+Q). The command can be found in the context menu when right clicking the document.
 

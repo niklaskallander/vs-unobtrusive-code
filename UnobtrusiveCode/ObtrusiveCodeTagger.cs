@@ -2,12 +2,14 @@
 {
     using Microsoft.CodeAnalysis;
     using Microsoft.CodeAnalysis.CSharp;
+    using Microsoft.VisualStudio.Shell;
     using Microsoft.VisualStudio.Text;
     using Microsoft.VisualStudio.Text.Classification;
     using Microsoft.VisualStudio.Text.Tagging;
 
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics;
     using System.Linq;
     using System.Reactive.Linq;
 
@@ -15,6 +17,8 @@
     using UnobtrusiveCode.Spans;
     using UnobtrusiveCode.Spans.Normalizers;
     using UnobtrusiveCode.Spans.Parsers;
+
+    using static UnobtrusiveCodePackage;
 
     public class ObtrusiveCodeTagger : ITagger<IClassificationTag>, ITagger<IOutliningRegionTag>
     {
@@ -43,9 +47,7 @@
             _spans = new NormalizedSnapshotSpanCollection();
             _tags = Enumerable.Empty<ITagSpan<ITag>>();
 
-            var options = new UnobtrusiveCodeOptions();
-
-            Parse(options);
+            Parse(CurrentOptions);
 
             Observable
                 .FromEventPattern<TextContentChangedEventArgs>
@@ -53,7 +55,7 @@
                     x => _buffer.Changed += x,
                     x => _buffer.Changed -= x
                 )
-                .Throttle(TimeSpan.FromMilliseconds(options.ParsingDelayMs))
+                .Throttle(TimeSpan.FromMilliseconds(CurrentOptions.ParsingDelayMs))
                 .Subscribe(x => OnBufferChanged(x.EventArgs));
         }
 
@@ -133,22 +135,32 @@
                 .Normalize(spans, options, text)
                 .Select(x => (new SnapshotSpan(new SnapshotPoint(snapshot, x.Start), new SnapshotPoint(snapshot, x.End)), x.AllowsOutlining, x.AllowsDimming));
 
-        private void OnBufferChanged(TextContentChangedEventArgs info)
+#pragma warning disable VSTHRD100 // Avoid async void methods
+        private async void OnBufferChanged(TextContentChangedEventArgs info)
         {
-            if (info.After == _buffer.CurrentSnapshot)
+            try
+            {
+                if (info.After == _buffer.CurrentSnapshot)
+                {
+                    await ThreadHelper.JoinableTaskFactory
+                        .SwitchToMainThreadAsync();
+
+                    Parse(CurrentOptions);
+                }
+            }
+            catch (Exception exception)
             {
                 try
                 {
-                    var options = new UnobtrusiveCodeOptions();
-
-                    Parse(options);
+                    Debug.Write(exception);
                 }
-                catch (Exception exception)
+                catch
                 {
-                    System.Diagnostics.Debug.Write(exception);
+                    // ignore
                 }
             }
         }
+#pragma warning restore VSTHRD100
 
         private void Parse(UnobtrusiveCodeOptions options)
         {
@@ -191,7 +203,7 @@
 
                 if (options.IsDimmingEnabled())
                 {
-                    var dimmingTagDefinition = new ClassificationTag(_classificationService.GetClassificationType(UnobtrusiveCodePackage.ObtrusiveCodeClassification));
+                    var dimmingTagDefinition = new ClassificationTag(_classificationService.GetClassificationType(ObtrusiveCodeClassification));
 
                     var dimmingTags = spans
                         .Where(x => x.AllowsDimming)

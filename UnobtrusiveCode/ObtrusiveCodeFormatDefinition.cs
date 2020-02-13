@@ -5,27 +5,25 @@
 
     using System.ComponentModel.Composition;
 
-    using UnobtrusiveCode.Options;
+    using static UnobtrusiveCodePackage;
 
     [Export(typeof(EditorFormatDefinition))]
-    [ClassificationType(ClassificationTypeNames = UnobtrusiveCodePackage.ObtrusiveCodeClassification)]
-    [Name(UnobtrusiveCodePackage.ObtrusiveCodeClassification)]
+    [ClassificationType(ClassificationTypeNames = ObtrusiveCodeClassification)]
+    [Name(ObtrusiveCodeClassification)]
     [UserVisible(true)]
     [Order(After = Priority.High)]
     public class ObtrusiveCodeFormatDefinition : ClassificationFormatDefinition
     {
         public ObtrusiveCodeFormatDefinition()
         {
-            var options = new UnobtrusiveCodeOptions();
+            ForegroundOpacity = CurrentOptions.DimmingOpacity;
+            BackgroundOpacity = CurrentOptions.DimmingOpacity;
 
-            ForegroundOpacity = options.DimmingOpacity;
-            BackgroundOpacity = options.DimmingOpacity;
-
-            DisplayName = UnobtrusiveCodePackage.ObtrusiveCodeClassification;
+            DisplayName = ObtrusiveCodeClassification;
         }
 
         [Export]
-        [Name(UnobtrusiveCodePackage.ObtrusiveCodeClassification)]
+        [Name(ObtrusiveCodeClassification)]
         internal static ClassificationTypeDefinition ObtrusiveCodeTypeDefinition = null;
     }
 }

@@ -2,6 +2,7 @@
 {
     using Microsoft.VisualStudio;
     using Microsoft.VisualStudio.Shell;
+    using Microsoft.VisualStudio.Shell.Interop;
     using Microsoft.VisualStudio.Text.Outlining;
     using Microsoft.VisualStudio.TextManager.Interop;
 
@@ -29,6 +30,21 @@
 
         [Import]
         internal IOutliningManagerService OutliningManagerService { get; set; }
+
+        private static UnobtrusiveCodeOptions _currentOptions;
+
+        internal static event EventHandler CurrentOptionsChanged;
+
+        internal static UnobtrusiveCodeOptions CurrentOptions
+        {
+            get => _currentOptions ?? (_currentOptions = new UnobtrusiveCodeOptions());
+            set
+            {
+                _currentOptions = value;
+
+                CurrentOptionsChanged?.Invoke(null, EventArgs.Empty);
+            }
+        }
 
         protected override async Task InitializeAsync
             (

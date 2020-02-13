@@ -42,7 +42,14 @@
                             .GetEndPositionOfNextToLastLine()
                                 ?? endPosition;
 
-                        yield return new ObtrusiveCodeSpan(leading.First().Span.Start, endPosition, UnobtrusiveCodePackage.CommentFeatures);
+                        var start = leading.First();
+
+                        if (start.Kind() == SyntaxKind.EndOfLineTrivia && leading.Count() > 1)
+                        {
+                            start = leading.ElementAt(1);
+                        }
+
+                        yield return new ObtrusiveCodeSpan(start.Span.Start, endPosition, UnobtrusiveCodePackage.CommentFeatures);
                     }
                 }
 

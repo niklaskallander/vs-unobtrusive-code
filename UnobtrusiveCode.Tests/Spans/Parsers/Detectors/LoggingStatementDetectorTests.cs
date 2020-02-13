@@ -9,6 +9,9 @@
     {
         private readonly ILoggingStatementDetector _detector = new LoggingStatementDetector();
 
+        /*
+         *  Testing
+         */
         [TestMethod]
         public void LoggingStatementDetector_EatsUpAnyAllAllWhiteSpace()
         {
@@ -20,6 +23,9 @@
             Assert.IsTrue(isLoggingCode);
         }
 
+        /// <summary>
+        ///     Trams
+        /// </summary>
         [TestMethod]
         public void LoggingStatementDetector_EatsUpBaseKeyword()
         {

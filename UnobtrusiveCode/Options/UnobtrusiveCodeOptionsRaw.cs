@@ -1,11 +1,10 @@
 ﻿namespace UnobtrusiveCode.Options
 {
     using System.ComponentModel;
+    using System.Threading.Tasks;
 
     internal class UnobtrusiveCodeOptionsRaw : BaseOptionModel<UnobtrusiveCodeOptionsRaw>
     {
-        // -- misc
-
         [Category("Misc")]
         [DisplayName("Parsing delay (ms)")]
         [Description("The delay until the document is re-parsed after a buffer change (default: 1000 ms).")]
@@ -16,9 +15,21 @@
 
         [Category("Dimming")]
         [DisplayName("Dimming opacity")]
-        [Description("Dimming opacity (default: 0.25)")]
-        [DefaultValue(0.25)]
-        public double DimmingOpacity { get; set; } = 0.25;
+        [Description("Dimming opacity (default: 0.4).")]
+        [DefaultValue(0.4)]
+        public double DimmingOpacity { get; set; } = 0.4;
+
+        [Category("Dimming")]
+        [DisplayName("Dimming opacity toggle enabled")]
+        [Description("Disable/Enable toggling of dimming opacity (default: true).")]
+        [DefaultValue(true)]
+        public bool DimmingOpacityTogglingEnabled { get; set; } = true;
+
+        [Category("Dimming")]
+        [DisplayName("Dimming opacity toggle key")]
+        [Description("Hold down this key to temporarily display dimmed obtrusive code with full opacity (default: LeftShift).")]
+        [DefaultValue(DimmingToggleKeys.LeftShift)]
+        public DimmingToggleKeys DimmingToggleKey { get; set; } = DimmingToggleKeys.LeftShift;
 
         // -- outlining
 
@@ -67,5 +78,12 @@
         [Description("Set logging identifiers (default: \"log. logger. logging.\", case-insensitive)")]
         [DefaultValue("log. logger. logging.")]
         public string LoggingIdentifiers { get; set; } = "log. logger. logging.";
+
+        public override async Task SaveAsync()
+        {
+            await base.SaveAsync();
+
+            UnobtrusiveCodePackage.CurrentOptions = new UnobtrusiveCodeOptions(this);
+        }
     }
 }

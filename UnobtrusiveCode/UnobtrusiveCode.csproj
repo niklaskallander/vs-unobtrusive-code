@@ -60,6 +60,7 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Options\DialogPageProvider.cs" />
+    <Compile Include="Options\DimmingToggleKeys.cs" />
     <Compile Include="Options\IUnobtrusiveCodeOptions.cs" />
     <Compile Include="Options\UnobtrusiveCodeOptions.cs" />
     <Compile Include="Options\UnobtrusiveCodeOptionsExtensions.cs" />
