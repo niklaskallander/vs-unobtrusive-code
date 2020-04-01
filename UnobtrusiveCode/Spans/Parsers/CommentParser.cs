@@ -2,6 +2,7 @@
 {
     using Microsoft.CodeAnalysis;
     using Microsoft.CodeAnalysis.CSharp;
+    using Microsoft.CodeAnalysis.CSharp.Syntax;
 
     using System.Collections.Generic;
     using System.Linq;
@@ -25,23 +26,14 @@
 
             foreach (var token in root.DescendantTokens())
             {
+                var allTriv = token.GetAllTrivia();
+
                 var leading = token.LeadingTrivia;
 
                 if (leading.Any(x => x.IsComment()))
                 {
                     if (leading.All(x => x.IsCommentOrWhiteSpace()))
                     {
-                        var end = leading.Last(x => x.IsComment());
-
-                        var endIndex = leading.IndexOf(end);
-
-                        var endPosition = end.Span.End;
-
-                        endPosition = leading
-                            .Skip(endIndex + 1)
-                            .GetEndPositionOfNextToLastLine()
-                                ?? endPosition;
-
                         var start = leading.First();
 
                         if (start.Kind() == SyntaxKind.EndOfLineTrivia && leading.Count() > 1)
@@ -49,7 +41,43 @@
                             start = leading.ElementAt(1);
                         }
 
-                        yield return new ObtrusiveCodeSpan(start.Span.Start, endPosition, UnobtrusiveCodePackage.CommentFeatures);
+                        int startPosition = start.Span.Start;
+                        int endPosition;
+
+                        var end = leading.Last(x => x.IsComment());
+
+                        if (end.HasStructure &&
+                            end.GetStructure() is DocumentationCommentTriviaSyntax structure)
+                        {
+                            // fix opening '/// ' in doc comment not being part of the Span-prop
+                            startPosition = start.FullSpan.Start;
+                            endPosition = structure.Span.End;
+
+                            if (structure.Content.LastOrDefault() is XmlTextSyntax text)
+                            {
+                                foreach (var textToken in text.TextTokens.Reverse())
+                                {
+                                    if (textToken.Kind() != SyntaxKind.XmlTextLiteralNewLineToken)
+                                    {
+                                        endPosition = textToken.Span.End;
+                                        break;
+                                    }
+                                }
+                            }
+                        }
+                        else
+                        {
+                            var endIndex = leading.IndexOf(end);
+
+                            endPosition = end.Span.End;
+
+                            endPosition = leading
+                                .Skip(endIndex + 1)
+                                .GetEndPositionOfNextToLastLine()
+                                    ?? endPosition;
+                        }
+
+                        yield return new ObtrusiveCodeSpan(startPosition, endPosition, UnobtrusiveCodePackage.CommentFeatures);
                     }
                 }
 
@@ -59,7 +87,10 @@
                 {
                     if (trailing.All(x => x.IsCommentOrWhiteSpace()))
                     {
-                        yield return new ObtrusiveCodeSpan(trailing.First(x => x.IsComment()).Span.Start, trailing.Last().Span.End, UnobtrusiveCodePackage.CommentFeatures);
+                        var start = trailing.First(x => x.IsComment());
+                        var end = trailing.Last(x => x.Kind() != SyntaxKind.EndOfLineTrivia);
+
+                        yield return new ObtrusiveCodeSpan(start.Span.Start, end.Span.End, UnobtrusiveCodePackage.CommentFeatures);
                     }
                 }
             }

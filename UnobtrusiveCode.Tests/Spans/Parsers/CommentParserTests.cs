@@ -91,7 +91,7 @@
         }
 
         [TestMethod]
-        public void CommentParser_EatsUpLeadingAndTrailingWhiteSpaceExceptFirstLeadingNewLine_MultiLineComment()
+        public void CommentParser_EatsUpLeadingWhiteSpaceExceptFirstLeadingNewLine_MultiLineComment()
         {
             const string code = @"namespace TestNamespace
 {
@@ -147,7 +147,7 @@
         }
 
         [TestMethod]
-        public void CommentParser_EatsUpLeadingAndTrailingWhiteSpaceExceptFirstLeadingNewLine_RegularComment()
+        public void CommentParser_EatsUpLeadingWhiteSpaceExceptFirstLeadingNewLine_RegularComment()
         {
             const string code = @"namespace TestNamespace
 {
@@ -199,7 +199,7 @@
         }
 
         [TestMethod]
-        public void CommentParser_EatsUpLeadingAndTrailingWhiteSpaceExceptFirstLeadingNewLine_DocComment()
+        public void CommentParser_EatsUpLeadingWhiteSpaceExceptFirstLeadingNewLine_DocComment()
         {
             const string code = @"namespace TestNamespace
 {
@@ -232,6 +232,70 @@
         ///     banana
         /// </summary>
 ";
+
+            var actual = code.Substring(span.Start, span.Length);
+
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestMethod]
+        public void CommentParser_EndOfLineComment_RegularComment()
+        {
+            const string code = @"namespace TestNamespace
+{
+    public class TestClass
+    {
+        public void TestMethod()
+        {
+            var apple = ""green""; // apple should be green       
+            var orange = ""orange2"";
+        }
+    }
+}";
+            var options = new ParserTestOptions();
+
+            var syntaxTree = (CSharpSyntaxTree)CSharpSyntaxTree.ParseText(code);
+
+            var spans = _parser
+                .Parse(syntaxTree, options);
+
+            Assert.AreEqual(1, spans.Count());
+
+            var span = spans.Single();
+
+            var expected = @"// apple should be green       ";
+
+            var actual = code.Substring(span.Start, span.Length);
+
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestMethod]
+        public void CommentParser_EndOfLineComment_DocComment()
+        {
+            const string code = @"namespace TestNamespace
+{
+    public class TestClass
+    {
+        public void TestMethod()
+        {
+            var apple = ""green""; /// <summary> apple should be green </summary>       
+            var orange = ""orange2"";
+        }
+    }
+}";
+            var options = new ParserTestOptions();
+
+            var syntaxTree = (CSharpSyntaxTree)CSharpSyntaxTree.ParseText(code);
+
+            var spans = _parser
+                .Parse(syntaxTree, options);
+
+            Assert.AreEqual(1, spans.Count());
+
+            var span = spans.Single();
+
+            var expected = @"/// <summary> apple should be green </summary>       ";
 
             var actual = code.Substring(span.Start, span.Length);
 
