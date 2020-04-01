@@ -22,13 +22,6 @@ steps:
     arguments: '$(Build.BuildNumber)'
     pwsh: true
 
-- task: DotNetCoreInstaller@0
-  inputs:
-    version: '2.2.401'
-
-- script: dotnet restore
-  displayName: Restore nuget packages
-
 - task: VSBuild@1
   inputs:
     solution: '**\*.sln'
