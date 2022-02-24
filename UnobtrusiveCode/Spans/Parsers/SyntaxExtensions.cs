@@ -60,7 +60,7 @@
         public static int? GetEndPositionOfNextToLastLine(this IEnumerable<SyntaxTrivia> triviaList)
         {
             var newLines = triviaList
-                .Where(x => x.Kind() == SyntaxKind.EndOfLineTrivia)
+                .Where(x => x.IsKind(SyntaxKind.EndOfLineTrivia))
                 .Reverse()
                 .ToList();
 

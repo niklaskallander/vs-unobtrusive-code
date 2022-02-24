@@ -36,7 +36,7 @@
                     {
                         var start = leading.First();
 
-                        if (start.Kind() == SyntaxKind.EndOfLineTrivia && leading.Count() > 1)
+                        if (start.IsKind(SyntaxKind.EndOfLineTrivia) && leading.Count() > 1)
                         {
                             start = leading.ElementAt(1);
                         }
@@ -57,7 +57,7 @@
                             {
                                 foreach (var textToken in text.TextTokens.Reverse())
                                 {
-                                    if (textToken.Kind() != SyntaxKind.XmlTextLiteralNewLineToken)
+                                    if (!textToken.IsKind(SyntaxKind.XmlTextLiteralNewLineToken))
                                     {
                                         endPosition = textToken.Span.End;
                                         break;
@@ -88,7 +88,7 @@
                     if (trailing.All(x => x.IsCommentOrWhiteSpace()))
                     {
                         var start = trailing.First(x => x.IsComment());
-                        var end = trailing.Last(x => x.Kind() != SyntaxKind.EndOfLineTrivia);
+                        var end = trailing.Last(x => !x.IsKind(SyntaxKind.EndOfLineTrivia));
 
                         yield return new ObtrusiveCodeSpan(start.Span.Start, end.Span.End, UnobtrusiveCodePackage.CommentFeatures);
                     }

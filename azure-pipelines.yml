@@ -2,7 +2,7 @@ trigger:
 - '*' # Run the pipeline for each commit
 
 pool:
-  vmImage: 'windows-2019' # Windows Server 2019 with Visual Studio 2019
+  vmImage: 'windows-latest'
 
 variables:
   # patch will be incremented at each build. This is useful to create a unique build version.
@@ -22,12 +22,10 @@ steps:
     arguments: '$(Build.BuildNumber)'
     pwsh: true
 
-- task: DotNetCoreInstaller@0
-  inputs:
-    version: '2.2.401'
-
-- script: dotnet restore
+- task: DotNetCoreCLI@2
   displayName: Restore nuget packages
+  inputs:
+    command: 'restore'
 
 - task: VSBuild@1
   inputs:
@@ -51,7 +49,7 @@ steps:
       **/*.vsix
     TargetFolder: '$(Build.ArtifactStagingDirectory)'
 
-- task: PublishPipelineArtifact@0
+- task: PublishPipelineArtifact@1
   inputs:
     artifactName: 'drop'
     targetPath: '$(Build.ArtifactStagingDirectory)'
