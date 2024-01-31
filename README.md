@@ -23,8 +23,8 @@ Dimming enabled                | True                  | Disable/enable comment 
 Outlining enabled              | True                  | Disable/enable comment outlining
 **Dimming**                    |                       |
 Dimming opacity                | 0.4                   | Dimming opacity (range: 0.00-1.00)
-Dimming opacity toggle enabled | True                  | Disable/Enable toggling of dimming opacity
-Dimming opacity toggle key     | LeftShift             | Hold down this key to temporarily display dimmed obtrusive code with full opacity
+Dimming opacity toggle enabled | False                 | Disable/Enable toggling of dimming opacity
+Dimming opacity toggle key     | RightCtrl             | Hold down this key to temporarily display dimmed obtrusive code with full opacity
 **Logging**                    |                       |
 Dimming enabled                | True                  | Disable/enable logging dimming
 Outlining enabled              | True                  | Disable/enable logging outlining

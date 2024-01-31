@@ -1,5 +1,7 @@
 ﻿namespace UnobtrusiveCode.Options
 {
+    using Community.VisualStudio.Toolkit;
+
     using System.ComponentModel;
     using System.Threading.Tasks;
 
@@ -23,13 +25,13 @@
         [DisplayName("Dimming opacity toggle enabled")]
         [Description("Disable/Enable toggling of dimming opacity (default: true).")]
         [DefaultValue(true)]
-        public bool DimmingOpacityTogglingEnabled { get; set; } = true;
+        public bool DimmingOpacityTogglingEnabled { get; set; } = false;
 
         [Category("Dimming")]
         [DisplayName("Dimming opacity toggle key")]
         [Description("Hold down this key to temporarily display dimmed obtrusive code with full opacity (default: LeftShift).")]
         [DefaultValue(DimmingToggleKeys.LeftShift)]
-        public DimmingToggleKeys DimmingToggleKey { get; set; } = DimmingToggleKeys.LeftShift;
+        public DimmingToggleKeys DimmingToggleKey { get; set; } = DimmingToggleKeys.RightShift;
 
         // -- outlining
 
