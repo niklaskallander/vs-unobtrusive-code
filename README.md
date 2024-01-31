@@ -5,7 +5,6 @@ An extension for Visual Studio that lets you hide away obtrusive code like comme
 Branch  | Status
 ------- | ------
 master  | [![Build Status](https://dev.azure.com/nkallander/Unobtrusive%20Code/_apis/build/status/niklaskallander.vs-unobtrusive-code?branchName=master)](https://dev.azure.com/nkallander/Unobtrusive%20Code/_build/latest?definitionId=3&branchName=master)
-develop | [![Build Status](https://dev.azure.com/nkallander/Unobtrusive%20Code/_apis/build/status/niklaskallander.vs-unobtrusive-code?branchName=develop)](https://dev.azure.com/nkallander/Unobtrusive%20Code/_build/latest?definitionId=3&branchName=develop)
 
 ## Download
 https://marketplace.visualstudio.com/items?itemName=niklaskallander.UnobtrusiveCode
@@ -24,7 +23,7 @@ Outlining enabled              | True                  | Disable/enable comment 
 **Dimming**                    |                       |
 Dimming opacity                | 0.4                   | Dimming opacity (range: 0.00-1.00)
 Dimming opacity toggle enabled | False                 | Disable/Enable toggling of dimming opacity
-Dimming opacity toggle key     | RightCtrl             | Hold down this key to temporarily display dimmed obtrusive code with full opacity
+Dimming opacity toggle key     | RightShift            | Hold down this key to temporarily display dimmed obtrusive code with full opacity
 **Logging**                    |                       |
 Dimming enabled                | True                  | Disable/enable logging dimming
 Outlining enabled              | True                  | Disable/enable logging outlining
